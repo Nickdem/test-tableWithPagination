@@ -8,7 +8,7 @@ function App() {
   const [data, setData] = useState(null)
   const tableLenght = 50
   const [reverse, setReverse] = useState(false)
- 
+
   useEffect(() => {
     setData(json)
   }, [])
@@ -24,11 +24,19 @@ function App() {
     for (let i = 0; i < pages; i++) {
       arr.push(i)
     }
-    return arr.map(num => {
-      return (
-        <p onClick={() => setCounter(num * tableLenght)} key={num}>{num + 1}</p>
-      )
-    })
+    console.log(counter, num1);
+    return (
+      <div style={{ 'display': 'flex' }}>
+        {counter > 0 && <p className="no-cur" onClick={() => setCounter(counter - tableLenght)}>&larr;</p>}
+        {arr.map(num => {
+          if (num > (counter / num2 - 3) && num < (counter / num2 + 3)) {
+            return (
+              <p className={num === counter/num2 || 0 ? 'cur' : 'no-cur'} onClick={() => setCounter(num * tableLenght)} key={num}>{num + 1}</p>
+            )
+          }
+        })}
+        {counter < num1 - num2 && <p className="no-cur" onClick={() => setCounter(counter + tableLenght)}>&rarr;</p>}
+      </div>)
   }
 
   function curData() {
@@ -36,7 +44,7 @@ function App() {
   }
 
   function changeHandler(e) {
-    
+
     const frr = json.filter(item => {
       return Object.values(item).join(' , ').toUpperCase().includes(e.target.value.toUpperCase())
     })
@@ -46,12 +54,12 @@ function App() {
   }
 
   if (!data) return <p>жди!</p>
-  
+
   return (
     <main className="app container">
       <Filter change={changeHandler} />
       <Table data={curData()} func={reverser} />
-      <div style={{'display': 'flex'}}>{pagination(data.length, tableLenght)}</div>
+      {pagination(data.length, tableLenght)}
     </main>
   );
 }
