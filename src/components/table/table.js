@@ -1,4 +1,4 @@
-import Cell from "../cell";
+import TableRow from "../table-row";
 
 export default function Table({ data, func }) {
     if (!data.length) return <p>Нет данных или совпадений!</p>
@@ -7,21 +7,10 @@ export default function Table({ data, func }) {
         <table border="1">
             <caption>Таблица комментариев</caption>
             <thead onClick={func}>
-                <tr>
-                    {Object.keys(data[0]).map(item => <Cell key={item} value={item} />)}
-               </tr>
+                <TableRow values={Object.keys(data[0])} />
             </thead>
             <tbody>
-                {
-                    data.map(item => {
-                        return (
-                            <tr key={item.id}>
-                                {Object.entries(item).map(itm => <Cell key={itm[0]} value={itm[1]} />)}
-                            </tr>
-                        )
-                    })
-                }
-                
+                {data.map(item => <TableRow key={item.id} values={Object.entries(item)} />)}
             </tbody>
         </table>
     )
