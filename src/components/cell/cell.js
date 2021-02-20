@@ -1,0 +1,1 @@
+export default function Cell({ value }) {return <td>{value}</td>}

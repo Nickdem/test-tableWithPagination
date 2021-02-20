@@ -38,7 +38,7 @@ function App() {
   function changeHandler(e) {
     
     const frr = json.filter(item => {
-      return Object.values(item).join(' , ').includes(e.target.value)
+      return Object.values(item).join(' , ').toUpperCase().includes(e.target.value.toUpperCase())
     })
 
     setData(frr)

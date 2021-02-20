@@ -1,21 +1,27 @@
-import TableRow from "../table-row";
-// import Tbody from "./tbody";
-// import Thead from "./thead";
+import Cell from "../cell";
 
 export default function Table({ data, func }) {
-
-    //console.log(Object.assign(...Object.keys(data[0]).map(item => item = {[`${item}`]:item})));
-    
-    const head = Object.assign(...Object.keys(data[0]).map(item => item = {[`${item}`]:item}))
+    if (!data.length) return <p>Нет данных или совпадений!</p>
 
     return (
         <table border="1">
             <caption>Таблица комментариев</caption>
             <thead onClick={func}>
-               <TableRow item={head} />
+                <tr>
+                    {Object.keys(data[0]).map(item => <Cell key={item} value={item} />)}
+               </tr>
             </thead>
             <tbody>
-                {data.map(item => (<TableRow key={item.id} item={item} />))}
+                {
+                    data.map(item => {
+                        return (
+                            <tr key={item.id}>
+                                {Object.entries(item).map(itm => <Cell key={itm[0]} value={itm[1]} />)}
+                            </tr>
+                        )
+                    })
+                }
+                
             </tbody>
         </table>
     )
