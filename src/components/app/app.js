@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
 import Filter from '../filter/filter';
-import json from '../../data.json';
 import Table from '../table/table';
 
 function App() {
   const [counter, setCounter] = useState(0)
   const [data, setData] = useState(null)
+  const [dataForChangeFunc, setDataForChangeFunc] = useState(null)
   const tableLenght = 50
   const [reverse, setReverse] = useState(false)
 
   useEffect(() => {
-    setData(json)
+    fetchData()
   }, [])
+
+  async function fetchData() {
+    const res = await fetch('https://jsonplaceholder.typicode.com/comments')
+    const json = await res.json()
+    await setData(json)
+    await setDataForChangeFunc(json)
+  }
 
   function reverser() {
     setReverse(!reverse)
@@ -43,11 +50,11 @@ function App() {
   }
 
   function changeHandler(e) {
-    const frr = json.filter(item => {
+    const newData = dataForChangeFunc.filter(item => {
       return Object.values(item).join(' , ').toUpperCase().includes(e.target.value.toUpperCase())
     })
-
-    setData(frr)
+    
+    setData(newData)
     setCounter(0)
   }
 
