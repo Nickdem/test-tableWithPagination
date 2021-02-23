@@ -24,19 +24,18 @@ function App() {
     for (let i = 0; i < pages; i++) {
       arr.push(i)
     }
-    console.log(counter, num1);
     return (
-      <div style={{ 'display': 'flex' }}>
-        {counter > 0 && <p className="no-cur" onClick={() => setCounter(counter - tableLenght)}>&larr;</p>}
+      <ul className="app__pagination center">
+        {counter > 0 && <li className="app__pagination-arrow" onClick={() => setCounter(counter - tableLenght)}>&larr;</li>}
         {arr.map(num => {
           if (num > (counter / num2 - 3) && num < (counter / num2 + 3)) {
             return (
-              <p className={num === counter/num2 || 0 ? 'cur' : 'no-cur'} onClick={() => setCounter(num * tableLenght)} key={num}>{num + 1}</p>
+              <li className={num === counter/num2 || 0 ? 'app__pagination-item--active' : 'app__pagination-item'} onClick={() => setCounter(num * tableLenght)} key={num}>{num + 1}</li>
             )
           }
         })}
-        {counter < num1 - num2 && <p className="no-cur" onClick={() => setCounter(counter + tableLenght)}>&rarr;</p>}
-      </div>)
+        {counter < num1 - num2 && <li className="app__pagination-arrow" onClick={() => setCounter(counter + tableLenght)}>&rarr;</li>}
+      </ul>)
   }
 
   function curData() {
@@ -44,7 +43,6 @@ function App() {
   }
 
   function changeHandler(e) {
-
     const frr = json.filter(item => {
       return Object.values(item).join(' , ').toUpperCase().includes(e.target.value.toUpperCase())
     })
